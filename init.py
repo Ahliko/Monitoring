@@ -9,7 +9,7 @@ if not os.path.exists('/var/log/monit.log'):
     os.system('chown $USER:$USER /var/log/monit.log')
 
 if not os.path.exists('/etc/monit'):
-    os.system('touch /etc/monit')
+    os.system('mkdir /etc/monit')
     os.system('chown $USER:$USER /etc/monit')
 
 if not os.path.exists('/etc/monit/monit.json'):
