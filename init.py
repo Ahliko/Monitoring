@@ -22,5 +22,5 @@ if not os.path.exists('/etc/monit/monit.json'):
     os.system('touch /etc/monit/monit.json')
     os.system('chown monit:monit /etc/monit/monit.json')
 
-os.system('cp monit.py /usr/bin/monit')
-os.system('chmod +x /usr/bin/monit')
+os.system('cp monit.py /usr/bin/monit.py')
+os.system('chmod +x /usr/bin/monit.py')
