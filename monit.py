@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 import datetime
 import socket
 
@@ -129,6 +130,7 @@ def get_last():
                 logger.error('Error while loading rapport: {}'.format(e))
                 return []
 
+
 def get_x_last_hour_avg(args):
     if not os.path.exists('/var/monit'):
         logger.error('No monit folder found')
@@ -160,3 +162,7 @@ def main():
 
     else:
         print('No check found')
+
+
+if __name__ == '__main__':
+    main()
