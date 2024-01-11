@@ -1,7 +1,9 @@
 import os
 import pwd
 
-if pwd.getpwnam('monit') is None:
+try:
+    pwd.getpwnam('monit')
+except KeyError:
     os.system('useradd monit --shell /sbin/nologin')
 
 if not os.path.exists('/var/monit'):
