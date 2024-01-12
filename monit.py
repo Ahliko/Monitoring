@@ -69,12 +69,12 @@ class Monitoring:
         if not os.path.exists(f'{self.__path}/monit_conf.json'):
             os.system(f'touch {self.__path}/monit_conf.json')
         with open(f"{self.__path}/monit_conf.json", "r") as f:
-            data = json.loads(f.read())
+            try:
+                data = json.loads(f.read())
+            except json.decoder.JSONDecodeError:
+                data = {"CHECK_PORTS": []}
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        for port in data["CHECK_PORTS"]:
-            port_status = sock.connect_ex(("127.0.0.1", port)) == 0
-            self.__logger.info(f"Port {port} status: {'open' if port_status else 'closed'}")
-            return port_status
+        return [sock.connect_ex(("127.0.0.1", port)) == 0 for port in data["CHECK_PORTS"]]
 
     def check(self):
         with open(f"{self.__path}/check_{datetime.datetime.now()}.json", "a") as f:
