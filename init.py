@@ -10,6 +10,11 @@ if not os.path.exists('/var/monit'):
     os.system('mkdir /var/monit')
     os.system('chown monit:monit /var/monit')
 
+if not os.path.exists('/var/monit/monit_conf.json'):
+    os.system('touch /var/monit/monit_conf.json')
+    os.system('chown monit:monit /var/monit/monit_conf.json')
+    os.system('echo {"CHECK_PORTS": []} > /var/monit/monit_conf.json')
+
 if not os.path.exists('/var/log/monit.log'):
     os.system('touch /var/log/monit.log')
     os.system('chown monit:monit /var/log/monit.log')
