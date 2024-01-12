@@ -24,6 +24,10 @@ if not os.path.exists('/etc/monit/monit.json'):
 
 os.system('cp monit.py /usr/bin/monit.py')
 os.system('chmod +x /usr/bin/monit.py')
+
+if os.system('pip --version') != 0:
+    os.system('dnf install python3-pip -y')
+
 os.system('pip install psutil')
 os.system('pip install colorlog')
 os.system('pip install fire')
