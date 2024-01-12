@@ -15,11 +15,11 @@ import fire
 
 class Monitoring:
     def __init__(self):
-        self.__logger = self.get_logger()
+        self.__logger = self.__get_logger()
         self.__path = "/var/monit"
 
     @staticmethod
-    def get_logger() -> logging.Logger:
+    def __get_logger() -> logging.Logger:
         logger = colorlog.getLogger()
         logger.setLevel(logging.INFO)
         file_handler = logging.FileHandler('/var/log/monit.log', 'w', 'utf-8')
@@ -48,50 +48,57 @@ class Monitoring:
     def list(self):
         for f in os.listdir(self.__path):
             if f.startswith("check_"):
-                print(f)
+                self.__logger.info(f)
 
-    @staticmethod
-    def check_cpu():
-        return psutil.cpu_percent()
+    def __check_cpu(self):
+        cpu_percent = psutil.cpu_percent()
+        self.__logger.info(f"CPU usage: {cpu_percent}%")
+        return cpu_percent
 
-    @staticmethod
-    def check_ram():
-        return psutil.virtual_memory().percent
+    def __check_ram(self):
+        ram_percent = psutil.virtual_memory().percent
+        self.__logger.info(f"RAM usage: {ram_percent}%")
+        return ram_percent
 
-    @staticmethod
-    def check_disk():
-        return psutil.disk_usage("/").percent
+    def __check_disk(self):
+        disk_percent = psutil.disk_usage("/").percent
+        self.__logger.info(f"Disk usage: {disk_percent}%")
+        return disk_percent
 
-    @staticmethod
-    def check_port():
+    def __check_port(self):
         with open("monit_conf.json", "r") as f:
             data = json.load(f)
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         for port in data["CHECK_PORTS"]:
-            return sock.connect_ex(("127.0.0.1", port)) == 0
+            port_status = sock.connect_ex(("127.0.0.1", port)) == 0
+            self.__logger.info(f"Port {port} status: {'open' if port_status else 'closed'}")
+            return port_status
 
     def check(self):
         with open(f"{self.__path}/check_{datetime.datetime.now()}.json", "a") as f:
             f.write(f"Date : {datetime.datetime.now()}\n")
             f.write(f"ID : {uuid.uuid4()}\n")
-            f.write(f"CPU : {self.check_cpu()}\n")
-            f.write(f"RAM : {self.check_ram()}\n")
-            f.write(f"Disk : {self.check_disk()}\n")
-            f.write(f"Port : {self.check_port()}\n")
+            f.write(f"CPU : {self.__check_cpu()}\n")
+            f.write(f"RAM : {self.__check_ram()}\n")
+            f.write(f"Disk : {self.__check_disk()}\n")
+            f.write(f"Port : {self.__check_port()}\n")
 
     def last(self):
-        print(max(glob.glob(self.__path + "*"), key=os.path.getctime))
+        last_file = max(glob.glob(self.__path + "*"), key=os.path.getctime)
+        self.__logger.info(f"Last file: {last_file}")
+        print(last_file)
 
-    def last_x_hour_file(self, hours: int):
+    def __last_x_hour_file(self, hours: int):
         hours *= 3600
         file_list = []
         for file in os.listdir(self.__path):
             if file.startswith("check_") and os.path.getmtime(self.__path + file) > time.time() - hours:
                 file_list.append(self.__path + file)
+        self.__logger.info(f"Files from last {hours / 3600} hours: {file_list}")
         return file_list
 
     def avg(self, hours: int):
-        file_list = self.last_x_hour_file(hours)
+        file_list = self.__last_x_hour_file(hours)
         cpu = []
         mem = []
         disk = []
@@ -107,12 +114,12 @@ class Monitoring:
         cpu_avg = sum(cpu) / len(cpu)
         mem_avg = sum(mem) / len(mem)
         disk_avg = sum(disk) / len(disk)
+        self.__logger.info(f"Average CPU usage: {cpu_avg}%")
+        self.__logger.info(f"Average RAM usage: {mem_avg}%")
+        self.__logger.info(f"Average Disk usage: {disk_avg}%")
         print("cpu: %.2f\nmem: %.2f\ndisk: %.2f" % (cpu_avg, mem_avg, disk_avg))
 
-    @property
-    def path(self):
-        return self.__path
 
-    @path.setter
-    def path(self, value):
-        self.__path = value
+
+if __name__ == '__main__':
+    fire.Fire(Monitoring)
