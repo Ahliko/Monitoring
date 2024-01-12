@@ -66,7 +66,9 @@ class Monitoring:
         return disk_percent
 
     def __check_port(self):
-        with open("monit_conf.json", "r") as f:
+        if not os.path.exists(f'{self.__path}/monit_conf.json'):
+            os.system(f'touch {self.__path}/monit_conf.json')
+        with open(f"{self.__path}/monit_conf.json", "r") as f:
             data = json.load(f)
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         for port in data["CHECK_PORTS"]:
