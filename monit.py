@@ -109,7 +109,6 @@ class Monitoring:
         disk = []
         for file in file_list:
             with open(file, "r") as f:
-                self.__logger.debug(f"Reading file: {f.readlines()}")
                 for line in f.readlines():
                     if line.startswith("CPU"):
                         self.__logger.debug(f"CPU line: {line.split(': ')[1].split('%')[0].strip()}")
