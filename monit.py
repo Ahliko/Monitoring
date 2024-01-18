@@ -124,8 +124,8 @@ class Monitoring:
         self.__logger.info(f"Average Disk usage: {disk_avg}%")
         print("cpu: %.2f\nmem: %.2f\ndisk: %.2f" % (cpu_avg, mem_avg, disk_avg))
 
-    def get(self, metric, operation, value):
-        self.__logger.debug(f"metric: {metric}, operation: {operation}, value: {value}")
+    def get(self, metric, operation):
+        self.__logger.debug(f"metric: {metric}, operation: {operation}")
 
 if __name__ == '__main__':
     fire.Fire(Monitoring)
