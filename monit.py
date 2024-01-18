@@ -116,6 +116,9 @@ class Monitoring:
                         mem.append(float(line.split(":")[1].split("%")[0].strip()))
                     elif line.startswith("disk"):
                         disk.append(float(line.split(":")[1].split("%")[0].strip()))
+        self.__logger.debug(f"CPU usage: {cpu}")
+        self.__logger.debug(f"RAM usage: {mem}")
+        self.__logger.debug(f"Disk usage: {disk}")
         cpu_avg = sum(cpu) / len(cpu)
         mem_avg = sum(mem) / len(mem)
         disk_avg = sum(disk) / len(disk)
