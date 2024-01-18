@@ -111,11 +111,11 @@ class Monitoring:
             with open(file, "r") as f:
                 for line in f:
                     if line.startswith("cpu"):
-                        cpu.append(float(line.split(":")[1].strip()))
+                        cpu.append(float(line.split(":")[1].split("%")[0].strip()))
                     elif line.startswith("mem"):
-                        mem.append(float(line.split(":")[1].strip()))
+                        mem.append(float(line.split(":")[1].split("%")[0].strip()))
                     elif line.startswith("disk"):
-                        disk.append(float(line.split(":")[1].strip()))
+                        disk.append(float(line.split(":")[1].split("%")[0].strip()))
         cpu_avg = sum(cpu) / len(cpu)
         mem_avg = sum(mem) / len(mem)
         disk_avg = sum(disk) / len(disk)
