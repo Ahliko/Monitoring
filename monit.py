@@ -109,6 +109,7 @@ class Monitoring:
         disk = []
         for file in file_list:
             with open(file, "r") as f:
+                self.__logger.debug(f"Reading file: {file}")
                 for line in f.readlines():
                     if line.startswith("cpu"):
                         cpu.append(float(line.split(":")[1].split("%")[0].strip()))
