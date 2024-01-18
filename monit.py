@@ -21,11 +21,11 @@ class Monitoring:
     @staticmethod
     def __get_logger() -> logging.Logger:
         logger = colorlog.getLogger()
-        logger.setLevel(logging.INFO)
+        logger.setLevel(logging.DEBUG)
         file_handler = logging.FileHandler('/var/log/monit.log', 'w', 'utf-8')
-        file_handler.setLevel(logging.INFO)
+        file_handler.setLevel(logging.DEBUG)
         stream_handler = colorlog.StreamHandler()
-        stream_handler.setLevel(logging.INFO)
+        stream_handler.setLevel(logging.DEBUG)
 
         formatter = colorlog.ColoredFormatter(
             "%(log_color)s%(asctime)s %(levelname)s %(message)s",
