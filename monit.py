@@ -117,6 +117,8 @@ class Monitoring:
                         mem.append(float(line.split(": ")[1].split("%")[0].strip()))
                     elif line.startswith("Disk"):
                         disk.append(float(line.split(": ")[1].split("%")[0].strip()))
+                    else:
+                        self.__logger.error(f"Unknown line: {line}")
         self.__logger.debug(f"CPU usage: {cpu}")
         self.__logger.debug(f"RAM usage: {mem}")
         self.__logger.debug(f"Disk usage: {disk}")
