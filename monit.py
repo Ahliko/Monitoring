@@ -16,7 +16,7 @@ import fire
 class Monitoring:
     def __init__(self):
         self.__logger = self.__get_logger()
-        self.__path = "/var/monit"
+        self.__path = "/var/monit/"
 
     @staticmethod
     def __get_logger() -> logging.Logger:
@@ -97,7 +97,7 @@ class Monitoring:
         hours *= 3600
         file_list = []
         for file in os.listdir(self.__path):
-            if file.startswith("check_") and os.path.getmtime(self.__path + file) > time.time() - hours:
+            if file.startswith("check_") and os.path.getmtime(self.__path + '/' + file) > time.time() - hours:
                 file_list.append(self.__path + file)
         self.__logger.info(f"Files from last {hours / 3600} hours: {file_list}")
         return file_list
