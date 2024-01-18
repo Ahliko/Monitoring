@@ -125,6 +125,5 @@ class Monitoring:
         print("cpu: %.2f\nmem: %.2f\ndisk: %.2f" % (cpu_avg, mem_avg, disk_avg))
 
 
-
 if __name__ == '__main__':
     fire.Fire(Monitoring)
