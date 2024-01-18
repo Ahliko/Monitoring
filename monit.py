@@ -112,6 +112,7 @@ class Monitoring:
                 self.__logger.debug(f"Reading file: {f.readlines()}")
                 for line in f.readlines():
                     if line.startswith("CPU"):
+                        self.__logger.debug(f"CPU line: {line.split(': ')[1].split('%')[0].strip()}")
                         cpu.append(float(line.split(": ")[1].split("%")[0].strip()))
                     elif line.startswith("RAM"):
                         mem.append(float(line.split(": ")[1].split("%")[0].strip()))
