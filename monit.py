@@ -111,12 +111,12 @@ class Monitoring:
             with open(file, "r") as f:
                 self.__logger.debug(f"Reading file: {f.readlines()}")
                 for line in f.readlines():
-                    if line.startswith("cpu"):
-                        cpu.append(float(line.split(":")[1].split("%")[0].strip()))
-                    elif line.startswith("mem"):
-                        mem.append(float(line.split(":")[1].split("%")[0].strip()))
-                    elif line.startswith("disk"):
-                        disk.append(float(line.split(":")[1].split("%")[0].strip()))
+                    if line.startswith("CPU"):
+                        cpu.append(float(line.split(": ")[1].split("%")[0].strip()))
+                    elif line.startswith("RAM"):
+                        mem.append(float(line.split(": ")[1].split("%")[0].strip()))
+                    elif line.startswith("Disk"):
+                        disk.append(float(line.split(": ")[1].split("%")[0].strip()))
         self.__logger.debug(f"CPU usage: {cpu}")
         self.__logger.debug(f"RAM usage: {mem}")
         self.__logger.debug(f"Disk usage: {disk}")
