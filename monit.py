@@ -130,9 +130,15 @@ class Monitoring:
         elif metric == "avg":
             if operation is None:
                 self.__logger.error("Missing operation")
-            self.__avg(operation)
+                exit(1)
+            elif type(operation) is not int:
+                self.__logger.error("Operation must be an integer")
+                exit(1)
+            else:
+                self.__avg(operation)
         else:
             self.__logger.error(f"Unknown metric: {metric}")
+            exit(1)
 
 
 if __name__ == '__main__':
