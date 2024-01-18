@@ -77,14 +77,14 @@ class Monitoring:
         return [sock.connect_ex(("127.0.0.1", port)) == 0 for port in data["CHECK_PORTS"]]
 
     def check(self):
-        date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        date = datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
         with open(f"{self.__path}/check_{date}.json", "a") as f:
             self.__logger.info(f"Ecriture dans : {self.__path}/check_{date}.json")
             f.write(f"Date : {date}\n")
             f.write(f"ID : {uuid.uuid4()}\n")
-            f.write(f"CPU : {self.__check_cpu()}\n")
-            f.write(f"RAM : {self.__check_ram()}\n")
-            f.write(f"Disk : {self.__check_disk()}\n")
+            f.write(f"CPU : {self.__check_cpu()}%\n")
+            f.write(f"RAM : {self.__check_ram()}%\n")
+            f.write(f"Disk : {self.__check_disk()}%\n")
             f.write(f"Port : {self.__check_port()}\n")
 
     def last(self):
