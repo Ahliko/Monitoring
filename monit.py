@@ -78,8 +78,8 @@ class Monitoring:
 
     def check(self):
         date = datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
-        with open(f"{self.__path}/check_{date}.json", "a") as f:
-            self.__logger.info(f"Ecriture dans : {self.__path}/check_{date}.json")
+        with open(f"{self.__path}check_{date}.json", "a") as f:
+            self.__logger.info(f"Ecriture dans : {self.__path}check_{date}.json")
             f.write(f"Date : {date}\n")
             f.write(f"ID : {uuid.uuid4()}\n")
             f.write(f"CPU : {self.__check_cpu()}%\n")
