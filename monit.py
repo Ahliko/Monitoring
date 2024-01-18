@@ -87,7 +87,7 @@ class Monitoring:
             f.write(f"Disk : {self.__check_disk()}%\n")
             f.write(f"Port : {self.__check_port()}\n")
 
-    def last(self):
+    def __last(self):
         last_file = max([self.__path + '/' + f for f in os.listdir(self.__path) if f.startswith("check_")],
                         key=os.path.getctime)
         self.__logger.info(f"Last file: {last_file}")
@@ -102,7 +102,7 @@ class Monitoring:
         self.__logger.info(f"Files from last {hours / 3600} hours: {file_list}")
         return file_list
 
-    def avg(self, hours: int):
+    def __avg(self, hours: int):
         file_list = self.__last_x_hour_file(hours)
         cpu = []
         mem = []
@@ -124,6 +124,8 @@ class Monitoring:
         self.__logger.info(f"Average Disk usage: {disk_avg}%")
         print("cpu: %.2f\nmem: %.2f\ndisk: %.2f" % (cpu_avg, mem_avg, disk_avg))
 
+    def get(self, metric, operation, value):
+        self.__logger.debug(f"metric: {metric}, operation: {operation}, value: {value}")
 
 if __name__ == '__main__':
     fire.Fire(Monitoring)
