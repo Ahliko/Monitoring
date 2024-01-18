@@ -124,8 +124,16 @@ class Monitoring:
         self.__logger.info(f"Average Disk usage: {disk_avg}%")
         print("cpu: %.2f\nmem: %.2f\ndisk: %.2f" % (cpu_avg, mem_avg, disk_avg))
 
-    def get(self, metric, operation):
-        self.__logger.debug(f"metric: {metric}, operation: {operation}")
+    def get(self, metric, operation=None):
+        if metric == "last":
+            self.__last()
+        elif metric == "avg":
+            if operation is None:
+                self.__logger.error("Missing operation")
+            self.__avg(operation)
+        else:
+            self.__logger.error(f"Unknown metric: {metric}")
+
 
 if __name__ == '__main__':
     fire.Fire(Monitoring)
