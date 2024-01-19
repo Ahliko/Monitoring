@@ -117,7 +117,10 @@ class Monitoring:
         disk = []
         for file in file_list:
             with open(file, "r") as f:
-                data = json.loads(f.read())
+                file = f.read()
+                print(file)
+                data = json.loads(file)
+                print(data)
                 cpu.append(data["CPU"])
                 mem.append(data["RAM"])
                 disk.append(data["Disk"])
