@@ -11,7 +11,7 @@ mkdir -p /var/monit
 mkdir -p /usr/local/lib64/monit
 
 # Create log file
-touch -p /var/log/monit.log
+touch /var/log/monit.log
 
 # Copy files
 cp -r monit /usr/local/lib64/monit
