@@ -119,9 +119,9 @@ class Monitoring:
             with open(file, "r") as f:
                 for line in f.readlines():
                     data = json.loads(line)
-                    cpu.append(data["CPU"].split("%")[0])
-                    mem.append(data["RAM"].split("%")[0])
-                    disk.append(data["Disk"].split("%")[0])
+                    cpu.append(data["CPU"])
+                    mem.append(data["RAM"])
+                    disk.append(data["Disk"])
         dicoavg = {"CPU": sum(cpu) / len(cpu), "RAM": sum(mem) / len(mem), "Disk": sum(disk) / len(disk)}
         self.__logger.info(f"Average: {dicoavg}")
         return json.dumps(dicoavg)
