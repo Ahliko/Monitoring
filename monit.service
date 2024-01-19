@@ -2,10 +2,10 @@
 Description=Monit gRPC Server
 
 [Service]
-ExecStart=/usr/bin/python3 /chemin/vers/monit_server.py
+ExecStart=/usr/bin/python3 /usr/local/bin/server.py
 Restart=always
-User=your_username
-WorkingDirectory=/chemin/vers/le/dossier/contenant/monit_server.py
+User=monit
+WorkingDirectory=/usr/local/lib64/monit
 
 [Install]
 WantedBy=multi-user.target

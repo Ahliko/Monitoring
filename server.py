@@ -1,9 +1,8 @@
 import grpc
 from concurrent import futures
-import monit_pb2
-import monit_pb2_grpc
+from monit import monit_pb2, monit_pb2_grpc
 from google.protobuf import empty_pb2
-from monit import Monitoring
+from monit.monit import Monitoring
 
 
 class MonitServiceServicer(monit_pb2_grpc.MonitServiceServicer):
