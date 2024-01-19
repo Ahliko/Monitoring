@@ -82,21 +82,23 @@ class Monitoring:
 
     def check(self):
         date = datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+        myjson = {
+            "Date": date,
+            "ID": str(uuid.uuid4()),
+            "CPU": self.__check_cpu(),
+            "RAM": self.__check_ram(),
+            "Disk": self.__check_disk(),
+            "Port": self.__check_port()
+        }
         with open(f"{self.__path}check_{date}.json", "a") as f:
             self.__logger.info(f"Ecriture dans : {self.__path}check_{date}.json")
-            f.write(f"Date : {date}\n")
-            f.write(f"ID : {uuid.uuid4()}\n")
-            f.write(f"CPU : {self.__check_cpu()}%\n")
-            f.write(f"RAM : {self.__check_ram()}%\n")
-            f.write(f"Disk : {self.__check_disk()}%\n")
-            f.write(f"Port : {self.__check_port()}\n")
-
+            f.write(json.dumps(myjson))
     def __last(self):
         last_file = max([self.__path + f for f in os.listdir(self.__path) if f.startswith("check_")],
                         key=os.path.getctime)
         self.__logger.info(f"Last file: {last_file}")
         with open(last_file, "r") as f:
-            return json.dumps(f.readlines())
+            return f.read()
 
     def __last_x_hour_file(self, hours: int):
         hours *= 3600
