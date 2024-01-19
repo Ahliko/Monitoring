@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package monit;
+
+service MonitService {
+  rpc Check (CheckRequest) returns (google.protobuf.Empty);
+  rpc GetLast (google.protobuf.Empty) returns (GetLastResponse);
+}
+
+message CheckRequest {
+  // Vous pouvez ajouter des champs ici si nécessaire
+}
+
+message GetLastResponse {
+  // Modifiez cette structure selon la sortie de votre fonction get_last
+  string result_json = 1;
+}
