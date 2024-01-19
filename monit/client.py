@@ -1,5 +1,5 @@
 import grpc
-from monit import monit_pb2_grpc
+import monit_pb2_grpc
 from google.protobuf import empty_pb2
 
 def run():

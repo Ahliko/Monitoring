@@ -32,6 +32,10 @@ chmod 755 /usr/local/bin/server.sh
 # Reload daemon
 systemctl daemon-reload
 
+# Open firewall
+firewall-cmd --permanent --add-port=50051/tcp
+firewall-cmd --reload
+
 # Enable monit service
 systemctl enable monit.service
 
