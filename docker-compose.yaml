@@ -8,3 +8,5 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: monitoring
       MONGO_INITDB_ROOT_PASSWORD: azerty
+    ports:
+        - "27017:27017"
