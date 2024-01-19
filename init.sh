@@ -8,13 +8,12 @@ useradd -m monit -s /sbin/nologin
 
 # Create folders
 mkdir -p /var/monit
-mkdir -p /usr/local/lib64/monit
 
 # Create log file
 touch /var/log/monit.log
 
 # Copy files
-cp -r monit /usr/local/lib64/monit
+cp -r monit /usr/local/lib64/
 cp server.sh /usr/local/bin
 
 # Copy monit.service
