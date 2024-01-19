@@ -37,10 +37,17 @@ firewall-cmd --permanent --add-port=50051/tcp
 firewall-cmd --reload
 
 # Enable monit service
-systemctl enable monit.service
+if [ "$(systemctl is-enabled monit.service)" -eq 0 ]; then
+    systemctl enable monit.service
+fi
 
 # Start monit service
-systemctl start monit.service
+if [ "$(systemctl is-started monit.service)" -eq 0 ]; then
+    systemctl start monit.service
+else
+    systemctl restart monit.service
+fi
+
 
 # Check status
 systemctl status monit.service

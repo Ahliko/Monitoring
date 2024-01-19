@@ -91,7 +91,7 @@ class Monitoring:
             f.write(f"Port : {self.__check_port()}\n")
 
     def __last(self):
-        last_file = max([self.__path + '/' + f for f in os.listdir(self.__path) if f.startswith("check_")],
+        last_file = max([self.__path + f for f in os.listdir(self.__path) if f.startswith("check_")],
                         key=os.path.getctime)
         self.__logger.info(f"Last file: {last_file}")
         return last_file
