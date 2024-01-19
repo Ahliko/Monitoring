@@ -122,7 +122,7 @@ class Monitoring:
                     cpu.append(data["CPU"])
                     mem.append(data["RAM"])
                     disk.append(data["Disk"])
-        dicoavg = {"CPU": sum(cpu) / len(cpu), "RAM": sum(mem) / len(mem), "Disk": sum(disk) / len(disk)}
+        dicoavg = {"CPU": str(sum(cpu) / len(cpu)), "RAM": str(sum(mem) / len(mem)), "Disk": str(sum(disk) / len(disk))}
         self.__logger.info(f"Average: {dicoavg}")
         return json.dumps(dicoavg)
 
