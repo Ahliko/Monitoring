@@ -3,7 +3,7 @@
 import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from monit import monit_pb2 as monit__pb2
+import monit_pb2 as monit__pb2
 
 
 class MonitServiceStub(object):
