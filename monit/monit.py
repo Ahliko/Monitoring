@@ -11,6 +11,7 @@ import os
 import glob
 import time
 import fire
+import json
 
 
 class Monitoring:
@@ -94,7 +95,8 @@ class Monitoring:
         last_file = max([self.__path + f for f in os.listdir(self.__path) if f.startswith("check_")],
                         key=os.path.getctime)
         self.__logger.info(f"Last file: {last_file}")
-        return last_file
+        with open(last_file, "r") as f:
+            return json.dumps(f.read())
 
     def __last_x_hour_file(self, hours: int):
         hours *= 3600
