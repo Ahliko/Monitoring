@@ -96,7 +96,7 @@ class Monitoring:
                         key=os.path.getctime)
         self.__logger.info(f"Last file: {last_file}")
         with open(last_file, "r") as f:
-            return json.dumps(f.read())
+            return json.dumps(f.readlines())
 
     def __last_x_hour_file(self, hours: int):
         hours *= 3600
