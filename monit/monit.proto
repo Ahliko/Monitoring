@@ -5,15 +5,24 @@ import "google/protobuf/empty.proto";
 package monit;
 
 service MonitService {
-  rpc Check (CheckRequest) returns (google.protobuf.Empty);
+  rpc Check (google.protobuf.Empty) returns (google.protobuf.Empty);
   rpc GetLast (google.protobuf.Empty) returns (GetLastResponse);
-}
-
-message CheckRequest {
-  // Vous pouvez ajouter des champs ici si nécessaire
+  rpc List (google.protobuf.Empty) returns (ListResponse);
+  rpc GetAvg (GetAvgRequest) returns (GetAvgResponse);
 }
 
 message GetLastResponse {
-  // Modifiez cette structure selon la sortie de votre fonction get_last
+  string result_json = 1;
+}
+
+message ListResponse {
+  repeated string items = 1;
+}
+
+message GetAvgRequest {
+  int32 parameter = 1;
+}
+
+message GetAvgResponse {
   string result_json = 1;
 }

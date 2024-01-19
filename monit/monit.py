@@ -93,6 +93,7 @@ class Monitoring:
         with open(f"{self.__path}check_{date}.json", "a") as f:
             self.__logger.info(f"Ecriture dans : {self.__path}check_{date}.json")
             f.write(json.dumps(myjson))
+
     def __last(self):
         last_file = max([self.__path + f for f in os.listdir(self.__path) if f.startswith("check_")],
                         key=os.path.getctime)
@@ -123,13 +124,9 @@ class Monitoring:
                         mem.append(float(line.split(": ")[1].split("%")[0].strip()))
                     elif line.startswith("Disk"):
                         disk.append(float(line.split(": ")[1].split("%")[0].strip()))
-        cpu_avg = sum(cpu) / len(cpu)
-        mem_avg = sum(mem) / len(mem)
-        disk_avg = sum(disk) / len(disk)
-        self.__logger.info(f"Average CPU usage: {cpu_avg}%")
-        self.__logger.info(f"Average RAM usage: {mem_avg}%")
-        self.__logger.info(f"Average Disk usage: {disk_avg}%")
-        return "cpu: %.2f\nmem: %.2f\ndisk: %.2f" % (cpu_avg, mem_avg, disk_avg)
+        dicoavg = {"CPU": sum(cpu) / len(cpu), "RAM": sum(mem) / len(mem), "Disk": sum(disk) / len(disk)}
+        self.__logger.info(f"Average: {dicoavg}")
+        return json.dumps(dicoavg)
 
     def get(self, metric, operation=None):
         if metric == "last":

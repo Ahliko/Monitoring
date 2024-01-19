@@ -15,6 +15,14 @@ class MonitServiceServicer(monit_pb2_grpc.MonitServiceServicer):
         result = Monitoring().get("last")
         return monit_pb2.GetLastResponse(result_json=result)
 
+    def List(self, request, context):
+        result = Monitoring().list()
+        return monit_pb2.ListResponse(items=result)
+
+    def GetAvg(self, request, context):
+        result = Monitoring().get("avg", request.parameter)
+        return monit_pb2.GetAvgResponse(result_json=result)
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
