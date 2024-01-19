@@ -43,9 +43,9 @@ fi
 
 # Start monit service
 if [ "$(systemctl is-active monit.service)" -eq 0 ]; then
-    systemctl start monit.service
-else
     systemctl restart monit.service
+else
+    systemctl start monit.service
 fi
 
 
