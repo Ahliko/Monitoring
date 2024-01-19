@@ -15,7 +15,7 @@ touch /var/log/monit.log
 
 # Copy files
 cp -r monit /usr/local/lib64/monit
-cp server.py /usr/local/bin
+cp server.sh /usr/local/bin
 
 # Copy monit.service
 cp monit.service /etc/systemd/system/monit.service
@@ -24,11 +24,11 @@ cp monit.service /etc/systemd/system/monit.service
 chown -R monit:monit /var/monit
 chown -R monit:monit /usr/local/lib64/monit
 chown -R monit:monit /var/log/monit.log
-chown -R monit:monit /usr/local/bin/server.py
+chown -R monit:monit /usr/local/bin/server.sh
 
 # Change permission
 
-chmod 755 /usr/local/bin/server.py
+chmod 755 /usr/local/bin/server.sh
 
 # Reload daemon
 systemctl daemon-reload
