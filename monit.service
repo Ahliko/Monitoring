@@ -2,7 +2,7 @@
 Description=Monit gRPC Server
 
 [Service]
-ExecStart=/usr/bin/python3 /usr/local/bin/server.py
+ExecStart=/usr/bin/bash /usr/local/bin/server.sh
 Restart=always
 User=monit
 WorkingDirectory=/usr/local/lib64/monit

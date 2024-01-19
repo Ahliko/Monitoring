@@ -3,7 +3,7 @@ from monit import monit_pb2_grpc
 from google.protobuf import empty_pb2
 
 def run():
-    channel = grpc.insecure_channel('localhost:50051')
+    channel = grpc.insecure_channel('10.1.1.10:50051')
     stub = monit_pb2_grpc.MonitServiceStub(channel)
 
     # Call the method Check
