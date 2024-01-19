@@ -46,9 +46,12 @@ class Monitoring:
         return logger
 
     def list(self):
+        lst = []
         for f in os.listdir(self.__path):
             if f.startswith("check_"):
                 self.__logger.info(f)
+                lst.append(f)
+        return lst
 
     def __check_cpu(self):
         cpu_percent = psutil.cpu_percent()
@@ -91,7 +94,7 @@ class Monitoring:
         last_file = max([self.__path + '/' + f for f in os.listdir(self.__path) if f.startswith("check_")],
                         key=os.path.getctime)
         self.__logger.info(f"Last file: {last_file}")
-        print(last_file)
+        return last_file
 
     def __last_x_hour_file(self, hours: int):
         hours *= 3600
@@ -122,11 +125,11 @@ class Monitoring:
         self.__logger.info(f"Average CPU usage: {cpu_avg}%")
         self.__logger.info(f"Average RAM usage: {mem_avg}%")
         self.__logger.info(f"Average Disk usage: {disk_avg}%")
-        print("cpu: %.2f\nmem: %.2f\ndisk: %.2f" % (cpu_avg, mem_avg, disk_avg))
+        return "cpu: %.2f\nmem: %.2f\ndisk: %.2f" % (cpu_avg, mem_avg, disk_avg)
 
     def get(self, metric, operation=None):
         if metric == "last":
-            self.__last()
+            return self.__last()
         elif metric == "avg":
             if operation is None:
                 self.__logger.error("Missing operation")
@@ -135,7 +138,7 @@ class Monitoring:
                 self.__logger.error("Operation must be an integer")
                 exit(1)
             else:
-                self.__avg(operation)
+                return self.__avg(operation)
         else:
             self.__logger.error(f"Unknown metric: {metric}")
             exit(1)
