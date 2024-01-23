@@ -112,6 +112,7 @@ class Monitoring:
 
     def __avg(self, hours: int):
         file_list = self.__last_x_hour_file(hours)
+        self.__logger.debug(f"Files from last {hours} hours: {file_list}")
         if len(file_list) == 0:
             self.__logger.warning("No file found for this period")
             return json.dumps({"CPU": "0", "RAM": "0", "Disk": "0"})
