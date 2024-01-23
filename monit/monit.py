@@ -123,7 +123,7 @@ class Monitoring:
             with open(file, "r") as f:
                 for line in f.readlines():
                     file = line.strip()
-                    print(file)
+                    self.__logger.debug(f"File: {file}")
                     data = json.loads(file)
                     print(data)
                     cpu.append(data["CPU"])
