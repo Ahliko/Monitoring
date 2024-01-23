@@ -90,9 +90,15 @@ class Monitoring:
             "Disk": self.__check_disk(),
             "Port": self.__check_port()
         }
-        with open(f"{self.__path}check_{date}.json", "a") as f:
-            self.__logger.info(f"Ecriture dans : {self.__path}check_{date}.json")
-            f.write(json.dumps(myjson))
+        if os.path.exists(f"{self.__path}check_{date}.json"):
+            with open(f"{self.__path}check_{date}.json", "a") as f:
+                self.__logger.info(f"Ecriture dans : {self.__path}check_{date}.json")
+                f.write("\n")
+                f.write(json.dumps(myjson))
+        else:
+            with open(f"{self.__path}check_{date}.json", "a") as f:
+                self.__logger.info(f"Ecriture dans : {self.__path}check_{date}.json")
+                f.write(json.dumps(myjson))
 
     def __last(self):
         last_file = max([self.__path + f for f in os.listdir(self.__path) if f.startswith("check_")],
