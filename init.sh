@@ -20,10 +20,10 @@ cp server.sh /usr/local/bin
 cp monit.service /etc/systemd/system/monit.service
 
 # change owner
-chown -R monit:monit /var/monit
-chown -R monit:monit /usr/local/lib64/monit
-chown -R monit:monit /var/log/monit.log
-chown -R monit:monit /usr/local/bin/server.sh
+chown -R monit:monit /var/monit \
+  /usr/local/lib64/monit \
+  /var/log/monit.log \
+  /usr/local/bin/server.sh
 
 # Change permission
 
@@ -33,21 +33,5 @@ chmod 755 /usr/local/bin/server.sh
 systemctl daemon-reload
 
 # Open firewall
-firewall-cmd --permanent --add-port=50051/tcp
-firewall-cmd --reload
-
-# Enable monit service
-if [ "$(systemctl is-enabled monit.service)" == "disabled" ]; then
-    systemctl enable monit.service
-fi
-
-# Start monit service
-if [ "$(systemctl is-active monit.service)" == "active" ]; then
-    systemctl restart monit.service
-else
-    systemctl start monit.service
-fi
-
-
-# Check status
-systemctl status monit.service
+firewall-cmd --add-port=50051/tcp
+firewall-cmd --runtime-to-permanent
