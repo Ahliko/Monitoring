@@ -1,3 +1,6 @@
+"""
+Install monit
+"""
 import os
 import pwd
 
