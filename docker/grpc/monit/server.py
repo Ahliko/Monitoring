@@ -1,8 +1,13 @@
 #! /usr/bin/env python
-import grpc
+
+import json
 from concurrent import futures
-import monit_pb2, monit_pb2_grpc
+
+import grpc
 from google.protobuf import empty_pb2
+
+from docker.api import monit_pb2_grpc
+from docker.api.api import monit_pb2, monit_pb2_grpc
 from monit import Monitoring
 
 
@@ -26,12 +31,13 @@ class MonitServiceServicer(monit_pb2_grpc.MonitServiceServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    port = json.load(open("/etc/monit/config.json"))["PORT"]
     monit_pb2_grpc.add_MonitServiceServicer_to_server(MonitServiceServicer(), server)
-    server.add_insecure_port('[::]:50051')
-    print('Starting server on port 50051...')
+    server.add_insecure_port(f"[::]:{port}")
+    print(f"Starting server on port {port}")
     server.start()
     server.wait_for_termination()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     serve()
