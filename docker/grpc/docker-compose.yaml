@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+    grpc:
+        build: .
+        container_name: grpc
+        restart: always
+        networks:
+            monit:
+
+networks:
+    monit:
+        external: true

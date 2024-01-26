@@ -1,0 +1,15 @@
+version: '3.1'
+
+services:
+    monit:
+        build: .
+        container_name: monit
+        restart: always
+        volumes:
+            - ./proc:/proc:ro
+        networks:
+            monit:
+
+networks:
+    monit:
+        external: true
