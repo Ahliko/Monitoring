@@ -11,6 +11,7 @@ services:
         volumes:
             - /proc:/proc
             - monitdata:/var/monit
+            - ./monit/serverConf.json:/etc/monit/config.json
         networks:
             monit:
 

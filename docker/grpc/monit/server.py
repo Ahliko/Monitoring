@@ -6,8 +6,8 @@ from concurrent import futures
 import grpc
 from google.protobuf import empty_pb2
 
-from docker.api import monit_pb2_grpc
-from docker.api.api import monit_pb2, monit_pb2_grpc
+import monit_pb2
+import monit_pb2_grpc
 from monit import Monitoring
 
 

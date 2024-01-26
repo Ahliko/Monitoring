@@ -51,8 +51,9 @@ def getlast():
     """
     logger.debug("Debut getlast")
     with open("/etc/monit/config.json", encoding="utf-8") as file:
-        grpc_port = json.load(file)["GRPC_PORT"]
-        grpc_host = json.load(file)["GRPC_HOST"]
+        file = file.read()
+        grpc_port = json.loads(file)["GRPC_PORT"]
+        grpc_host = json.loads(file)["GRPC_HOST"]
     channel = grpc.insecure_channel(f"{grpc_host}:{grpc_port}")
     stub = monit_pb2_grpc.MonitServiceStub(channel)
     response = stub.GetLast(empty_pb2.Empty())
