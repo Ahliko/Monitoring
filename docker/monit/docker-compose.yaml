@@ -7,9 +7,12 @@ services:
         restart: always
         volumes:
             - ./proc:/proc:ro
+            - monitdata:/var/monit
         networks:
             monit:
 
+volumes:
+    monitdata:
 networks:
     monit:
         external: true
