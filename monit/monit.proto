@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package monit;
+
+service MonitService {
+  rpc Check (google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc GetLast (google.protobuf.Empty) returns (GetLastResponse);
+  rpc List (google.protobuf.Empty) returns (ListResponse);
+  rpc GetAvg (GetAvgRequest) returns (GetAvgResponse);
+}
+
+message GetLastResponse {
+  string result_json = 1;
+}
+
+message ListResponse {
+  repeated string items = 1;
+}
+
+message GetAvgRequest {
+  int32 parameter = 1;
+}
+
+message GetAvgResponse {
+  string result_json = 1;
+}

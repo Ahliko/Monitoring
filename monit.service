@@ -1,0 +1,12 @@
+[Unit]
+Description=Monit gRPC Server
+
+[Service]
+ExecStart=/usr/bin/bash /usr/local/bin/server.sh
+Restart=always
+User=monit
+WorkingDirectory=/usr/local/lib64/monit
+
+[Install]
+WantedBy=multi-user.target
+

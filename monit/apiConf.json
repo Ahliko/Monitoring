@@ -1,0 +1,6 @@
+{
+  "PORT": 8080,
+  "HOST": "localhost",
+  "GRPC_PORT": 50051,
+  "GRPC_HOST": "localhost"
+}

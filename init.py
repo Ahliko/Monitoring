@@ -27,7 +27,7 @@ if not os.path.exists('/etc/monit/monit.json'):
     os.system('touch /etc/monit/monit.json')
     os.system('chown monit:monit /etc/monit/monit.json')
 
-os.system('cp monit.py /usr/bin/monit.py')
+os.system('cp monit.py /usr/local/bin/server.py')
 os.system('chmod +x /usr/bin/monit.py')
 
 if os.system('pip --version 2> /dev/null') != 0:
