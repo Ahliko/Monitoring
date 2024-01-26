@@ -1,13 +1,20 @@
 version: '3.1'
 
 services:
-    grpc:
+    monit:
         build: .
-        container_name: grpc
+        container_name: monit
         restart: always
+        ports:
+            - "50051:50051"
+        volumes:
+            - /proc:/proc
+            - monitdata:/var/monit
         networks:
             monit:
 
+volumes:
+    monitdata:
 networks:
     monit:
         external: true
