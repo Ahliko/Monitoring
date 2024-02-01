@@ -1,15 +1,14 @@
-import json
-from logging import DEBUG
-
-import colorlog
-import grpc
-from flask import Flask
-from google.protobuf import empty_pb2
-
 import monit_pb2_grpc
+from google.protobuf import empty_pb2
+from flask import Flask
+from flasgger import Swagger
+import json
+import grpc
+from logging import DEBUG
+import colorlog
 
 app = Flask(__name__)
-
+swag = Swagger(app)
 
 logger = colorlog.getLogger()
 logger.setLevel(DEBUG)
@@ -28,26 +27,35 @@ formatter = colorlog.ColoredFormatter(
     },
 )
 stream_handler.setFormatter(formatter)
-
 logger.addHandler(stream_handler)
 
-
-@app.route("/list")
-def list():
+# Endpoint for listing items
+@app.route("/list", methods=["GET"])
+def list_items():
+    """
+    List items.
+    ---
+    responses:
+      200:
+        description: A list of items.
+    """
     with open("/etc/monit/config.json") as f:
         grpc_port = json.load(f)["GRPC_PORT"]
         grpc_host = json.load(f)["GRPC_HOST"]
     channel = grpc.insecure_channel(f"{grpc_host}:{grpc_port}")
     stub = monit_pb2_grpc.MonitServiceStub(channel)
     response = stub.List(empty_pb2.Empty())
-    return response.items
+    return {"items": response.items}
 
-
+# Endpoint for getting the last item
 @app.route("/getlast", methods=["GET"])
-def getlast():
+def get_last():
     """
-
-    :return:
+    Get the last item.
+    ---
+    responses:
+      200:
+        description: The last item.
     """
     logger.debug("Debut getlast")
     with open("/etc/monit/config.json", encoding="utf-8") as file:
@@ -58,22 +66,36 @@ def getlast():
     stub = monit_pb2_grpc.MonitServiceStub(channel)
     response = stub.GetLast(empty_pb2.Empty())
     logger.debug("Fin getlast")
-    return response.result_json
+    return {"result_json": response.result_json}
 
-
-@app.route("/getavg")
-def getavg():
+# Endpoint for getting average
+@app.route("/getavg", methods=["GET"])
+def get_average():
+    """
+    Get the average.
+    ---
+    responses:
+      200:
+        description: The average result.
+    """
     with open("/etc/monit/config.json") as f:
         grpc_port = json.load(f)["GRPC_PORT"]
         grpc_host = json.load(f)["GRPC_HOST"]
     channel = grpc.insecure_channel(f"{grpc_host}:{grpc_port}")
     stub = monit_pb2_grpc.MonitServiceStub(channel)
     response = stub.GetAvg(empty_pb2.Empty())
-    return response.result_json
+    return {"result_json": response.result_json}
 
-
-@app.route("/check")
+# Endpoint for checking
+@app.route("/check", methods=["GET"])
 def check():
+    """
+    Check the service.
+    ---
+    responses:
+      200:
+        description: OK if the service is running.
+    """
     with open("/etc/monit/config.json") as f:
         grpc_port = json.load(f)["GRPC_PORT"]
         grpc_host = json.load(f)["GRPC_HOST"]
